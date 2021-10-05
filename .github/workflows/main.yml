@@ -14,7 +14,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - id: tag-num
-        uses: rcaroprese/map_tag@v1
+        uses: rcaroprese/map_tag@v2
         with:
           tag-name: ${GITHUB_REF/refs\/tags\//}
       - run: echo user-id ${{ steps.tag-num.outputs.user-number }}
