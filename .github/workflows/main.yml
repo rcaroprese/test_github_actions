@@ -16,6 +16,6 @@ jobs:
       - id: tag-num
         uses: rcaroprese/map_tag@v3
         with:
-          tag-name: ${GITHUB_REF/refs\/tags\//}
+          tag-name: ${GITHUB_REF#refs/*/}
       - run: echo user-id ${{ steps.tag-num.outputs.user-number }}
         shell: bash
