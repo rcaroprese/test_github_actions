@@ -17,5 +17,10 @@ jobs:
         uses: rcaroprese/map_tag@v5
         with:
           tag-name: ${GITHUB_REF#refs/*/}
-      - run: echo user-id ${{ steps.tag-num.outputs.user-number }}
+      - env:
+          DEV_ENV: ${{ secrets.DEV_ENV }}
+          TST_ENV: ${{ secrets.TST_ENV }}
+          ACC_ENV: ${{ secrets.ACC_ENV }}
+          PRD_ENV: ${{ secrets.PRD_ENV }}
+        run: echo user-id ${{ steps.tag-num.outputs.user-number }}
         shell: bash
