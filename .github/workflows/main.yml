@@ -42,7 +42,6 @@ jobs:
             account: "4"
 
     name: Deploy to ${{ matrix.environment-name }}
-    needs: [build]
     runs-on: ubuntu-latest
     environment: ${{ matrix.environment-name }}
     if: contains(github.ref, "release")
