@@ -6,6 +6,7 @@ on:
       - tst-*
       - acc-*
       - prd-*
+      - release-*
 
 jobs:
   map_tag_job:
@@ -18,4 +19,37 @@ jobs:
         with:
           tag-name: ${GITHUB_REF#refs/*/}
       - run: echo user-id ${{ steps.tag-num.outputs.user-number }}
+        shell: bash
+  
+  test-matrix:
+    strategy:
+      max-parallel: 1
+      fail-fast: true
+      matrix:
+        environment: [d, t, a, p]
+        include:
+          - environment: d
+            environment-name: dev
+            account: "1"
+          - environment: t
+            environment-name: tst
+            account: "2"
+          - environment: a
+            environment-name: acc
+            account: "3"
+          - environment: p
+            environment-name: prd
+            account: "4"
+
+    name: Deploy to ${{ matrix.environment-name }}
+    needs: [build]
+    runs-on: ubuntu-latest
+    environment: ${{ matrix.environment-name }}
+    if: contains(github.ref, ${{ matrix.environment-name || "release" }})
+
+    env:
+      T_ACCOUNT: ${{ matrix.account }}
+      
+    steps:
+      - run: echo ran for ${{ matrix.environment-name }}, ${{ matrix.environment }}, ${{ matrix.account }}
         shell: bash
