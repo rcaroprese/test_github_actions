@@ -44,7 +44,7 @@ jobs:
     name: Deploy to ${{ matrix.environment-name }}
     runs-on: ubuntu-latest
     environment: ${{ matrix.environment-name }}
-    if: contains(github.ref, 'release')
+    if: contains(github.ref, matrix.environment-name)
     env:
       T_ACCOUNT: ${{ matrix.account }}
     steps:
